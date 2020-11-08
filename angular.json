@@ -27,6 +27,8 @@
               "src/assets/images"
             ],
             "styles": [
+              "node_modules/devextreme/dist/css/dx.common.css",
+              "node_modules/devextreme/dist/css/dx.light.css",
               "src/styles.scss",
               "./node_modules/font-awesome/scss/font-awesome.scss"
             ],
@@ -57,8 +59,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "13mb",
-                  "maximumError": "15mb"
+                  "maximumWarning": "25mb",
+                  "maximumError": "35mb"
                 }
               ]
             }

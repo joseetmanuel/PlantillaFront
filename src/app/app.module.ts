@@ -272,6 +272,23 @@ import {MatTabsComponent} from './DemoPages/Material/Layout/mat-tabs/mat-tabs.co
 import {MatButtonsComponent} from './DemoPages/Material/ButtonsIndicators/mat-buttons/mat-buttons.component';
 import {MatProgressBarComponent} from './DemoPages/Material/ButtonsIndicators/mat-progress-bar/mat-progress-bar.component';
 
+import { GridComponentComponent } from "./utilerias/grid-component/grid-component.component";
+
+
+import {
+  DevExtremeModule,
+  DxDataGridModule,
+  DxFileUploaderModule,
+  DxCheckBoxModule,
+  DxSelectBoxModule,
+  DxButtonModule,
+  DxDropDownBoxModule,
+  DxAutocompleteModule,
+  DxTemplateModule,
+  DxPieChartModule
+} from "devextreme-angular";
+import { HomeComponent } from './tiket/home/home.component';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -285,6 +302,9 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
 
 @NgModule({
   declarations: [
+
+    //Utilerias 
+    GridComponentComponent,
 
     // LAYOUT
 
@@ -470,6 +490,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     MatButtonsComponent,
     MatProgressBarComponent,
     NgbdSortableHeaderDirective,
+    HomeComponent,
 
   ],
   imports: [
@@ -566,7 +587,17 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     MatSortModule,
     MatPaginatorModule,
     MatTreeModule,
-    MatRippleModule
+    MatRippleModule,
+
+    DevExtremeModule,
+    DxDataGridModule,
+    DxFileUploaderModule,
+    DxCheckBoxModule,
+    DxSelectBoxModule,
+    DxButtonModule,
+    DxDropDownBoxModule,DxAutocompleteModule,
+    DxTemplateModule,
+    DxPieChartModule
   ],
   providers: [
     {

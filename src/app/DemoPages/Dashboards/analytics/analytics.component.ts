@@ -1,5 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {Color} from 'ng2-charts/ng2-charts';
+import { Color } from 'ng2-charts/ng2-charts';
+import { SicoitService } from 'src/app/sicoit.service';
+import {
+  IGridOptions,
+  IColumns,
+  ICheckbox,
+  IEditing,
+  IColumnchooser,
+  IColumnHiding,
+  IExportExcel,
+  ISearchPanel,
+  IScroll,
+  Toolbar,
+  IDetail
+} from '../../../interfaces'
 
 @Component({
   selector: 'app-analytics',
@@ -7,152 +21,152 @@ import {Color} from 'ng2-charts/ng2-charts';
 })
 export class AnalyticsComponent implements OnInit {
 
-  heading = 'Analytics Dashboard';
+  heading = 'Etmanuel';
   subheading = 'This is an example dashboard created using build-in elements and components.';
   icon = 'pe-7s-plane icon-gradient bg-tempting-azure';
 
-  slideConfig6 = {
-    className: 'center',
-    infinite: true,
-    slidesToShow: 1,
-    speed: 500,
-    adaptiveHeight: true,
-    dots: true,
-  };
+  gridOptions: IGridOptions;
+  columns: IColumns[];
+  checkbox: ICheckbox;
+  facturas = [];
+  editing: IEditing;
+  columnchooser: IColumnchooser;
+  searchPanel: ISearchPanel;
+  scroll: IScroll;
+  datosevent: any;
+  evento: string;
+  exportExcel: IExportExcel;
+  toolbar: Toolbar[] = [];
+  columnHiding: IColumnHiding;
+  view: boolean = false
 
-  public datasets = [
-    {
-      label: 'My First dataset',
-      data: [65, 59, 80, 81, 46, 55, 38, 59, 80],
-      datalabels: {
-        display: false,
-      },
 
-    }
-  ];
+  constructor(private ds: SicoitService) {
+    this.table();
 
-  public datasets2 = [
-    {
-      label: 'My First dataset',
-      data: [46, 55, 59, 80, 81, 38, 65, 59, 80],
-      datalabels: {
-        display: false,
-      },
-
-    }
-  ];
-
-  public datasets3 = [
-    {
-      label: 'My First dataset',
-      data: [65, 59, 80, 81, 55, 38, 59, 80, 46],
-      datalabels: {
-        display: false,
-      },
-
-    }
-  ];
-  public lineChartColors: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(247, 185, 36, 0.2)',
-      borderColor: '#f7b924',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#f7b924',
-      pointBackgroundColor: '#fff',
-      pointHoverBorderWidth: 4,
-      pointRadius: 6,
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHitRadius: 10,
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#f7b924',
-    },
-  ];
-
-  public lineChartColors2: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(48, 177, 255, 0.2)',
-      borderColor: '#30b1ff',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#30b1ff',
-      pointBackgroundColor: '#ffffff',
-      pointHoverBorderWidth: 4,
-      pointRadius: 6,
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHitRadius: 10,
-      pointHoverBackgroundColor: '#ffffff',
-      pointHoverBorderColor: '#30b1ff',
-    },
-  ];
-
-  public lineChartColors3: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(86, 196, 121, 0.2)',
-      borderColor: '#56c479',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#56c479',
-      pointBackgroundColor: '#fff',
-      pointHoverBorderWidth: 4,
-      pointRadius: 6,
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHitRadius: 10,
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#56c479',
-    },
-  ];
-
-  public labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
-
-  public options = {
-    layout: {
-      padding: {
-        left: 0,
-        right: 8,
-        top: 0,
-        bottom: 0
-      }
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false,
-          beginAtZero: true
-        },
-        gridLines: {
-          display: false
-        }
-      }],
-      xAxes: [{
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          display: false
-        }
-      }]
-    },
-    legend: {
-      display: false
-    },
-    responsive: true,
-    maintainAspectRatio: false
-  };
+    ds.getService('tiket/getTikets').toPromise().then(data => {
+      console.log(data)
+    })
+  }
 
   ngOnInit() {
+  }
+
+  table() {
+
+    // Columnas de la tabla
+    try {
+      this.columns = [
+        {
+          caption: 'Razon social',
+          dataField: 'razonSocial',
+          hiddingPriority: '0'
+        },
+        {
+          caption: 'Contrato',
+          dataField: 'contrato',
+          hiddingPriority: '1'
+        },
+        {
+          caption: 'Estatus',
+          dataField: 'estatus',
+          hiddingPriority: '2'
+        },
+        {
+          caption: 'Por facturar',
+          dataField: 'porFacturar',
+          hiddingPriority: '3',
+        },
+        {
+          caption: 'Descuentos',
+          dataField: 'descuentos',
+          hiddingPriority: '4',
+        },
+        {
+          caption: 'Pagos',
+          dataField: 'pagos',
+          hiddingPriority: '5',
+        },
+        {
+          caption: 'Notas de crédito',
+          dataField: 'notasCredito',
+          hiddingPriority: '6',
+        },
+        {
+          caption: 'Facturado',
+          dataField: 'facturado',
+          hiddingPriority: '7',
+        }
+      ];
+
+      this.toolbar.push(
+        {
+          location: 'after',
+          widget: 'dxButton',
+          locateInMenu: 'auto',
+          options: {
+            width: 120,
+            text: 'Administrar',
+            onClick: this.receiveMessage.bind(this, 'Administrar')
+          },
+          visible: false,
+          name: 'simple',
+          name2: 'multiple'
+        });
+      // Parametros de Paginacion de Grit
+      const pageSizes = [];
+      pageSizes.push('10', '25', '50', '100');
+
+      // Parametros de Exploracion
+      this.exportExcel = { enabled: true, fileName: 'Listado facturar contrato' };
+      // ******************PARAMETROS DE COLUMNAS RESPONSIVAS EN CASO DE NO USAR HIDDING PRIORITY**************** */
+      this.columnHiding = { hide: true };
+      // ******************PARAMETROS DE PARA CHECKBOX**************** */
+      this.checkbox = { checkboxmode: 'multiple' };  // *desactivar con none*/
+      this.gridOptions = { paginacion: 10, pageSize: pageSizes };
+      // ******************PARAMETROS DE PARA EDITAR GRID**************** */
+      this.editing = { allowupdate: false }; // *cambiar a batch para editar varias celdas a la vez*/
+      // ******************PARAMETROS DE PARA SELECCION DE COLUMNAS**************** */
+      this.columnchooser = { columnchooser: true };
+
+      // Parametros de Search
+      this.searchPanel = {
+        visible: true,
+        width: 200,
+        placeholder: 'Buscar...',
+        filterRow: true
+      };
+
+      // Parametros de Scroll
+      this.scroll = { mode: 'standard' };
+
+      // Parametros de Toolbar
+      this.toolbar = [];
+      console.log(this.editing)
+      this.view = true;
+
+    } catch (error) { 
+
+      console.log('errTbl',error)
+    }
+  }
+
+  DatosMessage($event) {
+    try {
+      this.datosevent = $event.data;
+    } catch (error) {
+    }
+  }
+
+  receiveMessage($event) {
+    this.evento = $event.event;
+    if ($event === 'Administrar') {
+      const senddata = {
+        event: $event,
+        data: this.datosevent
+      };
+      // this.EditaFactura(senddata);
+    }
   }
 
 }
