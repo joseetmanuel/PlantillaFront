@@ -1,232 +1,160 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Color} from 'ng2-charts';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Color } from 'ng2-charts';
+import { SicoitService } from 'src/app/sicoit.service';
 
 @Component({
   selector: 'app-helpdesk',
   templateUrl: './helpdesk.component.html',
   styles: []
 })
-export class HelpdeskComponent implements OnInit, OnDestroy {
+export class HelpdeskComponent implements OnInit {
 
-  heading = 'Helpdesk';
-  subheading = 'This is an example dashboard created using build-in elements and components.';
-  icon = 'pe-7s-car icon-gradient bg-mean-fruit';
+  @Input() dispositivos;
+  @Input() add_upd;
+  @Output() cerrarTab = new EventEmitter<any>();
+  estatus: any;
+  usuarioForm = new FormGroup({
+    idTipoDispositivo: new FormControl('', [Validators.required]),
+    marca: new FormControl('', [Validators.required]),
+    modelo: new FormControl(''),
+    serie: new FormControl('', [Validators.required]),
+    memoria: new FormControl(''),
+    almacenamiento: new FormControl(''),
+    idProcesador: new FormControl('' ),
+    velocidadProcesador: new FormControl(''),
+    nucleos: new FormControl(''),
+    estatus: new FormControl('')
+  });
+  tipoDispositivos: any;
+  procesadores: any;
+  labelButonAddUpd: string;
 
-  slideConfig6 = {
-    className: 'center',
-    infinite: true,
-    slidesToShow: 1,
-    speed: 500,
-    adaptiveHeight: true,
-    dots: true,
-  };
-
-  public datasets = [
-    {
-      label: 'My First dataset',
-      data: [65, 59, 80, 81, 46, 55, 38, 59, 80],
-      datalabels: {
-        display: false,
-      },
-
-    }
-  ];
-
-  public datasets2 = [
-    {
-      label: 'My First dataset',
-      data: [46, 55, 59, 80, 81, 38, 65, 59, 80],
-      datalabels: {
-        display: false,
-      },
-
-    }
-  ];
-
-  public datasets3 = [
-    {
-      label: 'My First dataset',
-      data: [65, 59, 80, 81, 55, 38, 59, 80, 46],
-      datalabels: {
-        display: false,
-      },
-
-    }
-  ];
-
-  public datasets4 = [
-    {
-      label: 'My First dataset',
-      data: [46, 55, 38, 81, 59, 59, 80, 65, 76],
-      datalabels: {
-        display: false,
-      },
-
-    }
-  ];
-
-  public lineChartColors: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(247, 185, 36, 0.2)',
-      borderColor: '#f7b924',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#f7b924',
-      pointBackgroundColor: '#fff',
-      pointHoverBorderWidth: 4,
-      pointRadius: 6,
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHitRadius: 10,
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#f7b924',
-    },
-  ];
-
-  public lineChartColors2: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(48, 177, 255, 0.2)',
-      borderColor: '#30b1ff',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#30b1ff',
-      pointBackgroundColor: '#ffffff',
-      pointHoverBorderWidth: 4,
-      pointRadius: 6,
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHitRadius: 10,
-      pointHoverBackgroundColor: '#ffffff',
-      pointHoverBorderColor: '#30b1ff',
-    },
-  ];
-
-  public lineChartColors3: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(86, 196, 121, 0.2)',
-      borderColor: '#56c479',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#56c479',
-      pointBackgroundColor: '#fff',
-      pointHoverBorderWidth: 4,
-      pointRadius: 6,
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHitRadius: 10,
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#56c479',
-    },
-  ];
-
-  public lineChartColors4: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-      borderColor: '#fff',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#fff',
-      pointBackgroundColor: '#fff',
-      pointHoverBorderWidth: 4,
-      pointRadius: 6,
-      pointBorderWidth: 5,
-      pointHoverRadius: 8,
-      pointHitRadius: 10,
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#fff',
-    },
-  ];
-
-  public labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
-
-  public options = {
-    layout: {
-      padding: {
-        left: 0,
-        right: 8,
-        top: 0,
-        bottom: 0
-      }
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false,
-          beginAtZero: true
-        },
-        gridLines: {
-          display: false
-        }
-      }],
-      xAxes: [{
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          display: false
-        }
-      }]
-    },
-    legend: {
-      display: false
-    },
-    responsive: true,
-    maintainAspectRatio: false
-  };
-
-  percentageValue: (value: number) => string;
-
-  gaugeValues: any = {
-    1: 100,
-    2: 50,
-    3: 50,
-    4: 50,
-    5: 50,
-    6: 50,
-    7: 50
-  };
-
-  interval: any;
-
-  constructor() {
-    this.percentageValue = function(value: number): string {
-      return `${Math.round(value)} / ${this.max}`;
-    };
+  constructor(private ds: SicoitService) {
   }
 
-  ngOnInit(): void {
-    const updateValues = (): void => {
-      this.gaugeValues = {
-        1: Math.round(Math.random() * 100),
-        2: Math.round(Math.random() * 100),
-        3: Math.round(Math.random() * 100),
-        4: Math.round(Math.random() * 100),
-        5: Math.round(Math.random() * 200),
-        6: Math.round(Math.random() * 100),
-        7: Math.round(Math.random() * 100)
-      };
+  ngOnInit() {
+    this.catalogoEstatus();
+    this.catalogoTipoDispositivo();
+    this.catalogoProcesador();
+    if (this.add_upd) {
+      this.labelButonAddUpd = "Agregar"
+    } else {
+      this.fillForms();
+    }
+  }
+
+
+  fillForms() {
+    console.log("fillForms()", this.dispositivos);
+    this.labelButonAddUpd = "Modificar"
+    this.usuarioForm.controls.idTipoDispositivo.setValue(this.dispositivos[0].idTipoDispositivo),
+      this.usuarioForm.controls.marca.setValue(this.dispositivos[0].marca),
+      this.usuarioForm.controls.modelo.setValue(this.dispositivos[0].modelo),
+      this.usuarioForm.controls.serie.setValue(this.dispositivos[0].serie),
+      this.usuarioForm.controls.almacenamiento.setValue(this.dispositivos[0].almacenamiento),
+      this.usuarioForm.controls.nucleos.setValue(this.dispositivos[0].nucleos),
+      this.usuarioForm.controls.idProcesador.setValue(this.dispositivos[0].idProcesador),
+      this.usuarioForm.controls.estatus.setValue(this.dispositivos[0].estatus),
+      this.usuarioForm.controls.memoria.setValue(this.dispositivos[0].memoria),
+      this.usuarioForm.controls.velocidadProcesador.setValue(this.dispositivos[0].velocidadProcesador)
+
+  }
+ 
+  cancelar() {
+    this.cerrarTab.emit(false);
+  }
+
+  insDispositivo() {
+
+    const data = {
+      idTipoDispositivo: this.usuarioForm.controls.idTipoDispositivo.value,
+      marca: this.usuarioForm.controls.marca.value,
+      modelo: this.usuarioForm.controls.modelo.value,
+      serie: this.usuarioForm.controls.serie.value,
+      almacenamiento: this.usuarioForm.controls.almacenamiento.value,
+      nucleos: this.usuarioForm.controls.nucleos.value,
+      idProcesador: this.usuarioForm.controls.idProcesador.value,
+      estatus: 1,
+      memoria: this.usuarioForm.controls.memoria.value,
+      velocidadProcesador: this.usuarioForm.controls.velocidadProcesador.value,
+      foto: ""
+
+
     };
 
-    const INTERVAL = 5000;
 
-    this.interval = setInterval(updateValues, INTERVAL);
-    updateValues();
+    this.ds.postService('catalogo/postDispositivo', data).subscribe((res: any) => {
+      if (res.err) {
+      } else
+        if (res.excepcion) { }
+        else {
+
+          this.cerrarTab.emit(true);
+         }
+    }, (error: any) => { });
   }
 
-  ngOnDestroy(): void {
-    clearInterval(this.interval);
+
+  updDispositivo() {
+    const data = {
+      idDispositivo: this.dispositivos[0].idDispositivo,
+      idTipoDispositivo: this.usuarioForm.controls.idTipoDispositivo.value,
+      marca: this.usuarioForm.controls.marca.value,
+      modelo: this.usuarioForm.controls.modelo.value,
+      serie: this.usuarioForm.controls.serie.value,
+      almacenamiento: this.usuarioForm.controls.almacenamiento.value,
+      nucleos: this.usuarioForm.controls.nucleos.value,
+      idProcesador: this.usuarioForm.controls.idProcesador.value,
+      estatus:this.usuarioForm.controls.idProcesador.value ,
+      memoria: this.usuarioForm.controls.memoria.value,
+      velocidadProcesador: this.usuarioForm.controls.velocidadProcesador.value,
+      foto: ""
+    };
+
+    this.ds.putService('catalogo/putDispositivo', data).subscribe((res: any) => {
+      if (res.err) {
+      } else
+        if (res.excepcion) { }
+        else {
+          this.cerrarTab.emit(true);
+         }
+    }, (error: any) => { });
+
+
   }
+
+  selectorInsUpdUsuario() {
+    if (this.add_upd) {
+      this.insDispositivo();
+    } else {
+      this.updDispositivo();
+    }
+
+
+  }
+
+  catalogoTipoDispositivo() {
+    this.ds.getService('catalogo/getTipoDispositivos').toPromise().then((tipoDispositivos: any) => {
+      console.log("getTipoDispositivos ", tipoDispositivos.recordsets[0])
+      this.tipoDispositivos = tipoDispositivos.recordsets[0];
+    })
+  }
+
+  catalogoProcesador() {
+    this.ds.getService('catalogo/getProcesadores').toPromise().then((procesadores: any) => {
+      console.log("getProcesadores ", procesadores.recordsets[0])
+      this.procesadores = procesadores.recordsets[0];
+    })
+  }
+  
+  catalogoEstatus() {
+    this.ds.getService('catalogo/getEstatus').toPromise().then((estatus: any) => {
+      console.log("getEstatus ", estatus.recordsets[0])
+      this.estatus = estatus.recordsets[0];
+    })
+  }
+
+
 
 }

@@ -129,7 +129,7 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
     &.active-item {
       font-weight: 600;
-      @extend %side-link-hover;
+    //  @extend %side-link-hover;
     }
 
     &[disabled] {
@@ -208,9 +208,9 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
     .vsm-item {
       .vsm-link {
-        padding: 0 ($layout-spacer-x / 1.5);
-        height: 1.9rem;
-        line-height: 1.9rem;
+  //      padding: 0 ($layout-spacer-x / 1.5);
+ //       height: 1.9rem;
+//        line-height: 1.9rem;
         font-weight: normal;
 
         &.active-item {

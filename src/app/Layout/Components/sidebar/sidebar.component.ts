@@ -27,6 +27,7 @@ export class SidebarComponent implements OnInit {
 
   sidebarHover() {
     this.globals.sidebarHover = !this.globals.sidebarHover;
+ 
   }
 
   ngOnInit() {

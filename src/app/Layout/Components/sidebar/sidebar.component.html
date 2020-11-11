@@ -1,12 +1,15 @@
 <div [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme" (mouseover)="sidebarHover()"
-     (mouseout)="sidebarHover()">
+  (mouseout)="sidebarHover()">
   <div class="app-header__logo">
-    <div class="logo-src"></div>
+    <!-- <div class="logo-src"></div> -->
+
+
+
     <div class="header__pane ml-auto">
       <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
-              [ngClass]="{'is-active' : globals.toggleSidebar}" (click)="toggleSidebar()">
+        [ngClass]="{'is-active' : globals.toggleSidebar}" (click)="toggleSidebar()">
         <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
+          <span class="hamburger-inner"></span>
         </span>
       </button>
     </div>
@@ -19,7 +22,7 @@
             <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
               <ngb-panel>
                 <ng-template ngbPanelHeader>
-                  <div class="vsm-header">Main Navigation</div>
+                  <div class="vsm-header">Sistemas</div>
                 </ng-template>
               </ngb-panel>
               <ngb-panel id="dashboardsMenu">
@@ -33,31 +36,23 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div class="vsm-item"><a routerLink="" routerLinkActive="active-item"
-                                               [routerLinkActiveOptions]="{exact: true}" class="vsm-link"><span
-                        class="vsm-title">Analytics</span></a>
-                      </div>
                       <div class="vsm-item">
-                        <a routerLink="/dashboards/advertisement" routerLinkActive="active-item" class="vsm-link"><span
-                          class="vsm-title">Advertisement</span></a>
+                        <a routerLink="" routerLinkActive="active-item" [routerLinkActiveOptions]="{exact: true}"
+                          class="vsm-link"><span class="vsm-title">Home</span></a>
                       </div>
-                      <div class="vsm-item">
+                      <!-- <div class="vsm-item">
                         <a routerLink="/dashboards/management" routerLinkActive="active-item" class="vsm-link"><span
-                          class="vsm-title">Management</span></a>
+                            class="vsm-title">Management</span></a>
                       </div>
                       <div class="vsm-item">
                         <a routerLink="/dashboards/helpdesk" routerLinkActive="active-item" class="vsm-link"><span
-                          class="vsm-title">Helpdesk</span></a>
+                            class="vsm-title">Helpdesk</span></a>
                       </div>
                       <div class="vsm-item">
                         <a routerLink="/dashboards/monitoring" routerLinkActive="active-item" class="vsm-link"><span
-                          class="vsm-title">Monitoring</span></a>
-                      </div>
-                      <div class="vsm-item">
-                        <a routerLink="/dashboards/crypto" routerLinkActive="active-item" class="vsm-link"><span
-                          class="vsm-title">Crypto</span></a>
-                      </div>
-                      <div class="vsm-item">
+                            class="vsm-title">Monitoring</span></a>
+                      </div> -->
+                      <!--       <div class="vsm-item">
                         <a routerLink="/dashboards/project-management" routerLinkActive="active-item"
                            (click)="activeId='dashboardsMenu'"
                            class="vsm-link"><span class="vsm-title">Project Management</span></a>
@@ -69,30 +64,29 @@
                       <div class="vsm-item">
                         <a routerLink="/dashboards/statistics" routerLinkActive="active-item" class="vsm-link"><span
                           class="vsm-title">Statistics</span></a>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel id="pagesMenu">
+              <ngb-panel id="Tickets">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-browser"></i>
-                    <span class="vsm-title">Pages</span>
+                    <span class="vsm-title">Tickets</span>
                     <i class="vsm-arrow"></i>
                   </button>
                 </ng-template>
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div class="vsm-item"><a routerLinkActive="active-item" routerLink="/pages/login"
-                                               class="vsm-link"><span
-                        class="vsm-title">Login</span></a></div>
                       <div class="vsm-item">
-                        <a routerLinkActive="active-item" routerLink="/pages/login-boxed" class="vsm-link"><span
-                          class="vsm-title">Login Boxed</span></a>
+                        <a routerLink="/dashboards/crypto" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">Tickets</span></a>
                       </div>
-                      <div class="vsm-item">
+
+   
+                      <!--  <div class="vsm-item">
                         <a routerLinkActive="active-item" routerLink="/pages/register" class="vsm-link"><span
                           class="vsm-title">Register</span></a>
                       </div>
@@ -107,16 +101,16 @@
                       <div class="vsm-item">
                         <a routerLinkActive="active-item" routerLink="/pages/forgot-password-boxed"
                            class="vsm-link"><span class="vsm-title">Forgot Password Boxed</span></a>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel id="applicationsMenu">
+              <ngb-panel id="Inventario">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
-                    <i class="vsm-icon pe-7s-plugin"></i>
-                    <span class="vsm-title">Applications</span>
+                    <i class="vsm-icon pe-7s-browser"></i>
+                    <span class="vsm-title">Inventario</span>
                     <i class="vsm-arrow"></i>
                   </button>
                 </ng-template>
@@ -124,22 +118,22 @@
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
                       <div class="vsm-item">
-                        <a routerLinkActive="active-item" routerLink="/apps/mailbox" class="vsm-link"><span
-                          class="vsm-title">Mailbox</span></a>
+                        <a  routerLink="/apps/mailbox"  routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">Dispositivos</span></a>
                       </div>
                       <div class="vsm-item">
                         <a routerLinkActive="active-item" routerLink="/apps/chat" class="vsm-link"><span
-                          class="vsm-title">Chat</span></a>
+                            class="vsm-title">Usuarios</span></a>
                       </div>
-                      <div class="vsm-item">
+                      <!-- <div class="vsm-item">
                         <a routerLinkActive="active-item" routerLink="/apps/material-tabs" class="vsm-link"> <span
                           class="vsm-title">Material Tabs</span></a>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel>
+              <!-- <ngb-panel>
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">Bootstrap Components</div>
                 </ng-template>
@@ -215,8 +209,8 @@
                     </div>
                   </div>
                 </ng-template>
-              </ngb-panel>
-              <ngb-panel id="componentsMenu">
+              </ngb-panel> -->
+              <!-- <ngb-panel id="componentsMenu">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-car"></i>
@@ -566,8 +560,8 @@
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">Dashboard Boxes</div>
                 </ng-template>
-              </ngb-panel>
-              <ngb-panel id="pagesMenu3">
+              </ngb-panel> -->
+              <!-- <ngb-panel id="pagesMenu3">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-graph2"></i>
@@ -593,9 +587,9 @@
                     </div>
                   </div>
                 </ng-template>
-              </ngb-panel>
+              </ngb-panel> -->
             </ngb-accordion>
-            <div class="vsm-item">
+            <!-- <div class="vsm-item">
               <a routerLink="/widgets/profile-boxes" routerLinkActive="active-item" class="vsm-link">
                 <i class="vsm-icon pe-7s-id"></i>
                 <span class="vsm-title">Profile Boxes</span>
@@ -613,19 +607,19 @@
                 <i class="vsm-icon pe-7s-graph"></i>
                 <span class="vsm-title">Apex Charts</span>
               </a>
-            </div>
-            <div class="vsm-item">
+            </div> -->
+            <!-- <div class="vsm-item">
               <a routerLink="/charts/gauges" routerLinkActive="active-item" class="vsm-link">
                 <i class="vsm-icon pe-7s-gleam"></i>
                 <span class="vsm-title">Gauges</span>
               </a>
-            </div>
-            <div class="vsm-item">
+            </div> -->
+            <!-- <div class="vsm-item">
               <a routerLink="/charts/sparklines" routerLinkActive="active-item" class="vsm-link">
                 <i class="vsm-icon pe-7s-graph1"></i>
                 <span class="vsm-title">Chart Sparklines</span>
               </a>
-            </div>
+            </div>  -->
           </div>
         </div>
       </perfect-scrollbar>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Color } from 'ng2-charts/ng2-charts';
 import { SicoitService } from 'src/app/sicoit.service';
 import {
@@ -21,8 +22,8 @@ import {
 })
 export class AnalyticsComponent implements OnInit {
 
-  heading = 'Etmanuel';
-  subheading = 'This is an example dashboard created using build-in elements and components.';
+  heading = 'Sistemas SSICO IT';
+  subheading = 'Home';
   icon = 'pe-7s-plane icon-gradient bg-tempting-azure';
 
   gridOptions: IGridOptions;
@@ -39,17 +40,21 @@ export class AnalyticsComponent implements OnInit {
   toolbar: Toolbar[] = [];
   columnHiding: IColumnHiding;
   view: boolean = false
+  dataGetTicket: any;
+  tickets =  [];
+
 
 
   constructor(private ds: SicoitService) {
-    this.table();
-
-    ds.getService('tiket/getTikets').toPromise().then(data => {
-      console.log(data)
+    ds.getService('tiket/getTikets').toPromise().then((data : any) => {
+      console.log("tickets " ,  data.recordsets[0])
+     this.tickets = data.recordsets[0];    
     })
   }
 
   ngOnInit() {
+ 
+    this.table();
   }
 
   table() {
@@ -58,44 +63,48 @@ export class AnalyticsComponent implements OnInit {
     try {
       this.columns = [
         {
-          caption: 'Razon social',
-          dataField: 'razonSocial',
-          hiddingPriority: '0'
+          caption: 'ID Tiket',
+          dataField: 'idTiket',
         },
         {
-          caption: 'Contrato',
-          dataField: 'contrato',
-          hiddingPriority: '1'
+          caption: 'Tipo de tiket',
+          dataField: 'idTipoTiket',
+        },
+        {
+          caption: 'Usuario',
+          dataField: 'idUsuario',
+        },
+        {
+          caption: 'Dispositivo',
+          dataField: 'idDispositivo',
+        },
+        {
+          caption: 'Cuenta',
+          dataField: 'idCuenta',
+        },
+        {
+          caption: 'Fecha de Creación',
+          dataField: 'fechaCreacion',
+        },
+        {
+          caption: 'Prioridad',
+          dataField: 'idPrioridad',
         },
         {
           caption: 'Estatus',
           dataField: 'estatus',
-          hiddingPriority: '2'
         },
         {
-          caption: 'Por facturar',
-          dataField: 'porFacturar',
-          hiddingPriority: '3',
+          caption: 'Solución',
+          dataField: 'solucion',
         },
         {
-          caption: 'Descuentos',
-          dataField: 'descuentos',
-          hiddingPriority: '4',
+          caption: 'Fecha de solución',
+          dataField: 'fechaSolucion',
         },
         {
-          caption: 'Pagos',
-          dataField: 'pagos',
-          hiddingPriority: '5',
-        },
-        {
-          caption: 'Notas de crédito',
-          dataField: 'notasCredito',
-          hiddingPriority: '6',
-        },
-        {
-          caption: 'Facturado',
-          dataField: 'facturado',
-          hiddingPriority: '7',
+          caption: 'Usuario solución',
+          dataField: 'usuarioSolucion',
         }
       ];
 
@@ -142,12 +151,12 @@ export class AnalyticsComponent implements OnInit {
 
       // Parametros de Toolbar
       this.toolbar = [];
-      console.log(this.editing)
       this.view = true;
 
-    } catch (error) { 
 
-      console.log('errTbl',error)
+    } catch (error) {
+
+      console.log('errTbl', error)
     }
   }
 

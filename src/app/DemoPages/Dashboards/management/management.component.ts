@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Color} from 'ng2-charts';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SicoitService } from 'src/app/sicoit.service';
 
 @Component({
   selector: 'app-management',
@@ -8,82 +9,121 @@ import {Color} from 'ng2-charts';
 })
 export class ManagementComponent implements OnInit {
 
-  heading = 'Management';
-  subheading = 'This is an example dashboard created using build-in elements and components.';
-  icon = 'pe-7s-car icon-gradient bg-mean-fruit';
 
-  public datasets = [
-    {
-      label: 'My First dataset',
-      data: [65, 59, 80, 81, 55, 38, 59, 80, 46],
-      datalabels: {
-        display: false,
-      },
-
-    }
-  ];
-  public lineChartColors: Color[] = [
-    { // dark grey
-      backgroundColor: 'rgba(58, 196, 125, 0.35)',
-      borderCapStyle: 'round',
-      borderDash: [],
-      borderWidth: 4,
-      borderColor: '#3ac47d',
-      borderDashOffset: 0.0,
-      borderJoinStyle: 'round',
-      pointBorderColor: '#3ac47d',
-      pointBackgroundColor: '#ffffff',
-      pointBorderWidth: 0,
-      pointHoverRadius: 0,
-      pointHoverBackgroundColor: '#ffffff',
-      pointHoverBorderColor: '#3ac47d',
-      pointHoverBorderWidth: 0,
-      pointRadius: 0,
-      pointHitRadius: 0,
-    },
-  ];
-
-  public labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
-
-  public options = {
-    layout: {
-      padding: {
-        left: 0,
-        right: 8,
-        top: 0,
-        bottom: 0
-      }
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          display: false,
-          beginAtZero: true
-        },
-        gridLines: {
-          display: false
-        }
-      }],
-      xAxes: [{
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          display: false
-        }
-      }]
-    },
-    legend: {
-      display: false
-    },
-    responsive: true,
-    maintainAspectRatio: false
-  };
-
-  constructor() {
+  @Input() usuarios;
+  @Input() add_upd;
+  @Output() cerrarTab = new EventEmitter<any>();
+  estatus: any;
+  usuarioForm = new FormGroup({
+    nombreUsuario: new FormControl('', [Validators.required]),
+    primerNombre: new FormControl('', [Validators.required]),
+    segundoNombre: new FormControl(''),
+    primerApellido: new FormControl('', [Validators.required]),
+    segundoApellido: new FormControl(''),
+    estatus: new FormControl('' ),
+    archivoFoto: new FormControl('')
+ 
+  });
+ 
+  labelButonAddUpd : string;
+  constructor(private ds: SicoitService) {
   }
 
   ngOnInit() {
+ 
+      console.log("recibiendo datos tabla ", this.usuarios );
+      console.log("this.add_upd", this.add_upd);
+      if (this.add_upd) {
+        this.labelButonAddUpd = "Agregar"
+      } else {
+        this. fillForms() ;
+      }
   }
 
+  fillForms() {
+     
+    console.log("Entrando afill forms  " );
+    this.labelButonAddUpd = "Modificar"
+    this.usuarioForm.controls.nombreUsuario.setValue(this.usuarios[0].nombreUsuario),
+      this.usuarioForm.controls.primerNombre.setValue(this.usuarios[0].primerNombre),
+      this.usuarioForm.controls.segundoNombre.setValue(this.usuarios[0].segundoNombre),
+      this.usuarioForm.controls.primerApellido.setValue(this.usuarios[0].primerApellido),
+      this.usuarioForm.controls.segundoApellido.setValue(this.usuarios[0].segundoApellido),
+      this.usuarioForm.controls.estatus.setValue(this.usuarios[0].estatus)
+  }
+
+ 
+  cancelar() {
+
+    this.cerrarTab.emit(false);
+  }
+
+
+  insUsuario() {
+
+    const data = {
+      nombreUsuario: this.usuarioForm.controls.nombreUsuario.value,
+      primerNombre: this.usuarioForm.controls.primerNombre.value,
+      segundoNombre: this.usuarioForm.controls.segundoNombre.value,
+      primerApellido: this.usuarioForm.controls.primerApellido.value,
+      segundoApellido: this.usuarioForm.controls.segundoApellido.value,
+      estatus: 1,
+      archivoFoto: ""
+    };
+
+
+    this.ds.postService('catalogo/postUsuario', data).subscribe((res: any) => {
+      if (res.err) {
+      } else
+        if (res.excepcion) { }
+        else {
+
+          this.cerrarTab.emit(true);
+
+         }
+    }, (error: any) => { });
+  }
+
+
+  updUsuario() {
+    const data = {
+      _idUsuario: this.usuarios[0].idUsuario,
+      nombreUsuario: this.usuarioForm.controls.nombreUsuario.value,
+      primerNombre: this.usuarioForm.controls.primerNombre.value,
+      segundoNombre: this.usuarioForm.controls.segundoNombre.value,
+      primerApellido: this.usuarioForm.controls.primerApellido.value,
+      segundoApellido: this.usuarioForm.controls.segundoApellido.value,
+      estatus: this.usuarioForm.controls.estatus.value,
+      archivoFoto: ""
+    };
+
+    this.ds.putService('catalogo/putUsuario', data).subscribe((res: any) => {
+      if (res.err) {
+      } else
+        if (res.excepcion) { }
+        else { 
+
+          this.cerrarTab.emit(true);
+
+        }
+    }, (error: any) => { });
+
+
+  }
+
+  selectorInsUpdUsuario(){
+    if (this.add_upd){
+      this.insUsuario();
+    } else {
+      this.updUsuario();
+    }
+    
+
+  }
+ 
+
 }
+
+
+
+

@@ -9,11 +9,11 @@ import {ThemeOptions} from '../../theme-options'
 export class OptionsDrawerComponent {
 
   toggleOptionsDrawer() {
-    this.globals.toggleThemeOptions = !this.globals.toggleThemeOptions;
+  //  this.globals.toggleThemeOptions = !this.globals.toggleThemeOptions;
   }
 
   toggleFixedFooter() {
-    this.globals.toggleFixedFooter = !this.globals.toggleFixedFooter;
+   // this.globals.toggleFixedFooter = !this.globals.toggleFixedFooter;
   }
 
   constructor(public globals: ThemeOptions,

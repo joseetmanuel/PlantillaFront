@@ -156,7 +156,8 @@ const routes: Routes = [
       {path: 'dashboards/project-management', component: ProjectManagementComponent, data: {extraParameter: 'dashboardsMenu'}},
       {path: 'dashboards/product', component: ProductComponent, data: {extraParameter: 'dashboardsMenu'}},
       {path: 'dashboards/statistics', component: StatisticsComponent, data: {extraParameter: 'dashboardsMenu'}},
-
+      {path: 'apps/mailbox', component: MailboxComponent, data: {extraParameter: 'dashboardsMenu'}},
+      {path: 'apps/chat', component: ChatComponent, data: {extraParameter: 'dashboardsMenu'}},
       // Elements
 
       {path: 'elements/buttons-standard', component: StandardComponent, data: {extraParameter: 'elementsMenu'}},
@@ -294,8 +295,8 @@ const routes: Routes = [
 
       // Applications
 
-      {path: 'apps/chat', component: ChatComponent, data: {extraParameter: 'applicationsMenu'}},
-      {path: 'apps/mailbox', component: MailboxComponent, data: {extraParameter: 'applicationsMenu'}},
+    //  {path: 'apps/chat', component: ChatComponent, data: {extraParameter: 'applicationsMenu'}},
+    //  {path: 'apps/mailbox', component: MailboxComponent, data: {extraParameter: 'applicationsMenu'}},
       {path: 'apps/material-tabs', component: MaterialTabsComponent, data: {extraParameter: 'applicationsMenu'}},
     ]
   },
